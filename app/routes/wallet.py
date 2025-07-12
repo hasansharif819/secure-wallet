@@ -4,7 +4,7 @@ from jose import JWTError, jwt
 from fastapi.security import APIKeyHeader
 from app.database.db import get_db
 from app.crud.user import get_user_by_id
-from app.crud.transaction import top_up_wallet, get_transactions
+from app.crud.transaction import top_up_wallet, get_transactions, withdraw_wallet
 from app.schemas.transaction import TopUpRequest, TransactionOut
 
 SECRET_KEY = "xFoGdlV-JYu7iHvS0eJp2ZJW2X3AfXDL"
@@ -38,6 +38,18 @@ async def get_balance(current_user=Depends(get_current_user)):
 @router.post("/top-up", response_model=TransactionOut)
 async def top_up(data: TopUpRequest, db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
     return await top_up_wallet(db, current_user, data.amount)
+
+@router.post("/withdraw", response_model=TransactionOut)
+async def withdraw(
+    data: TopUpRequest,
+    db: AsyncSession = Depends(get_db),
+    current_user=Depends(get_current_user),
+):
+    try:
+        return await withdraw_wallet(db, current_user, data.amount)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 
 @router.get("/transactions", response_model=list[TransactionOut])
 async def transactions(db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
