@@ -51,8 +51,9 @@ Make sure PostgreSQL is installed and running.
 Create the database for the app:
 
 ```bash
-psql -U postgres
+sudo -i -u postgres psql
 CREATE DATABASE wallet_db;
+GRANT ALL PRIVILEGES ON DATABASE wallet_db TO database_user_name
 \q
 ```
 
