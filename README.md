@@ -98,7 +98,7 @@ https://youtu.be/Fz-8cs8Gc8s
 * │
 * ├── app/
 * │   ├── api/              # API routes and endpoints
-* │   ├── core/             # Security, config, JWT utilities
+* │   ├── core/             # Security
 * │   ├── database/         # DB session & base class
 * │   ├── models/           # SQLAlchemy ORM models
 * │   ├── schemas/          # Pydantic data models (validation)
