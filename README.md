@@ -64,6 +64,13 @@ sqlalchemy.url = postgresql+asyncpg://sharif:password@localhost:5432/wallet_db
 Replace sharif with <your_database_user> and password <your_database_password>
 ```
 
+Also Update the database/db_url.py file
+
+```bash
+SQLALCHEMY_DATABASE_URL="postgresql+asyncpg://sharif:password@localhost:5432/wallet_db"
+Replace sharif with <your_database_user> and password <your_database_password>
+```
+
 ### 6️⃣ Run database migrations (Optional)
 As you cloning may be its not needed. You can skip this. If you use this please see the alembic/versions/"your migration name file" then update that upgrade and downgrade
 Alembic for migrations, run:
