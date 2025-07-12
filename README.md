@@ -52,19 +52,20 @@ Create the database for the app:
 
 ```bash
 psql -U postgres
-CREATE DATABASE secure_wallet;
+CREATE DATABASE wallet_db;
 \q
 ```
 
 ### 5️⃣ Setup environment variables
-Create a .env file in the root folder with the following content:
+Update alembic.ini file (line 87) with the following content:
 ```bash
-DATABASE_URL=postgresql+asyncpg://postgres:<your_password>@localhost:5432/secure_wallet
-Replace <your_password> and your_secret_key_here accordingly.
+sqlalchemy.url = postgresql+asyncpg://sharif:password@localhost:5432/wallet_db
+Replace sharif with <your_database_user> and password <your_database_password>
 ```
 
-### 6️⃣ Run database migrations
-If you are using Alembic for migrations, run:
+### 6️⃣ Run database migrations (Optional)
+As you cloning may be its not needed. You can skip this. If you use this please see the alembic/versions/"your migration name file" then update that upgrade and downgrade
+Alembic for migrations, run:
 
 ```bash
 alembic revision --autogenerate -m "initial migration"
@@ -75,7 +76,7 @@ If you are not using migrations and rely on SQLAlchemy to create tables automati
 ### 7️⃣ Start the FastAPI server
 ```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 5000
-Open your browser at http://localhost:8000 to access the API.
+Open your browser at http://localhost:5000/docs to access the API.
 ```
 
 ### 📂 Project Structure
