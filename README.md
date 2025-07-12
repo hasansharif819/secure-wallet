@@ -115,6 +115,7 @@ POST	/wallet/withdraw	Withdraw funds from wallet	Yes
 
 
 ### 👨‍💻 Author
-Sharif Hasan
-✉️ hs.sharif819@gmail.com
-+8801640911511
+* Sharif Hasan
+* ✉️ hs.sharif819@gmail.com
+* 📞 +8801640911511
+* 🌐 [GitHub](https://github.com/hasansharif819)
