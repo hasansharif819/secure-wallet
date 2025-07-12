@@ -32,8 +32,8 @@ async def login(data: UserLogin, db: AsyncSession = Depends(get_db)):
 @router.get("/users")
 async def get_users(
     db: AsyncSession = Depends(get_db),
-    page: int = Query(1, ge=1),
-    limit: int = Query(20, ge=1, le=100)
+    page: int = Query(1, ge=1, description="Page number"),
+    limit: int = Query(20, ge=1, le=100, description="Number of items per page"),
 ):
     try:
         return await crud_user.get_users_paginated(db, page, limit)

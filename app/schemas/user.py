@@ -1,4 +1,6 @@
 from pydantic import BaseModel, EmailStr
+from pydantic import ConfigDict
+
 
 class UserCreate(BaseModel):
     name: str
@@ -11,10 +13,11 @@ class UserLogin(BaseModel):
 
 class UserOut(BaseModel):
     id: int
+    name: str
     email: EmailStr
     balance: float
-    class Config:
-        orm_mode = True
+
+    model_config = ConfigDict(from_attributes=True)
 
 class Token(BaseModel):
     access_token: str

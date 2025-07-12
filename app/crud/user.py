@@ -3,6 +3,7 @@ from sqlalchemy.future import select
 from sqlalchemy import func
 from app.models.user import User
 from app.core.security import hash_password, verify_password
+from app.schemas.user import UserOut
 
 
 async def create_user(db: AsyncSession, name: str, email: str, password: str):
@@ -37,23 +38,25 @@ async def get_user_by_id(db: AsyncSession, user_id: int):
         raise e
 
 
-async def get_users_paginated(db: AsyncSession, page: int, limit: int):
+async def get_users_paginated(db: AsyncSession, page: int, limit: int) -> dict:
     try:
         offset = (page - 1) * limit
 
+        # Get total count of users
         total_result = await db.execute(select(func.count()).select_from(User))
         total = total_result.scalar()
 
+        # Get paginated users
         users_result = await db.execute(
             select(User)
+            .order_by(User.created_at.desc())
             .offset(offset)
             .limit(limit)
-            .order_by(User.created_at.desc())
         )
         users = users_result.scalars().all()
 
         return {
-            "data": users,
+            "data": [UserOut.from_orm(user) for user in users],
             "meta": {
                 "total": total,
                 "page": page,
@@ -62,4 +65,4 @@ async def get_users_paginated(db: AsyncSession, page: int, limit: int):
             }
         }
     except Exception as e:
-        raise e
+        raise RuntimeError(f"Failed to fetch users: {str(e)}")
